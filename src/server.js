@@ -15,6 +15,8 @@ app.use('/api/', coachRouter);
 
 // Error handlers
 
+// Utilize error 404 and 500 handlers
+
 module.exports = {  
     app,
     start: (port) => {
