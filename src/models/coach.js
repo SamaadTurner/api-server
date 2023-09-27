@@ -9,10 +9,10 @@ const CoachModel = (sequelize, DataTypes) => sequelize.define('Coach', {// defin
         type: DataTypes.INTEGER,
         allowNull: false
         },
-        playerId: { // foreign key
-            type: DataTypes.INTEGER,
-            allowNull: false
-        }
+        // playerId: { // foreign key
+        //     type: DataTypes.INTEGER,
+        //     allowNull: false
+        // }
 });
 
 module.exports = CoachModel;

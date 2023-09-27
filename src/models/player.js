@@ -9,7 +9,7 @@ const Player = (sequelize, DataTypes) => sequelize.define('Player', {
       type: DataTypes.STRING,
       allowNull: false
     },
-    teamId: {
+    coachId: {
       type: DataTypes.INTEGER,
       allowNull: false
     }

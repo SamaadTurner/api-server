@@ -2,10 +2,10 @@
 
 const supertest = require('supertest');
 const server = require('../src/server.js');
-const { sequelize } = require('../src/models/index.js'); // this is the instance of sequelize that we created in index.js
+const { sequelize, CoachModel } = require('../src/models/index.js'); // this is the instance of sequelize that we created in index.js
 const request = supertest(server.app);
 
-
+let coach;
 // built in jest function, set up suites of our tests
 
 beforeAll(async () => {
@@ -16,13 +16,23 @@ afterAll(async () => {
     await sequelize.drop(); // this will drop all of our database tables
 
 });
+beforeEach(async () => {
+    try{
+        coach = await CoachModel.create({
+        name: 'Jon', 
+        championships: 1
+    });
+    } catch (error) {
+    console.log(error);
+    }
+});
 describe('Testing the REST Router', () => {
 
     test('Should CREATE a Player', async () => {
         let response = await request.post('/api/player').send({
             name: 'Samaad',
             position: 'Small forward',
-            teamId: 15
+            coachId: coach.id
         });
         expect(response.status).toEqual(200);
         expect(response.body.name).toEqual('Samaad');
@@ -42,7 +52,7 @@ describe('Testing the REST Router', () => {
         let response = await request.patch('/api/player/1').send({
             name: 'Jon',
             position: 'Center',
-            teamId: 1
+            coachId: 1
         });
     
         expect(response.status).toEqual(200);
