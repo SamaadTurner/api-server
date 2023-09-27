@@ -8,12 +8,11 @@ const router = express.Router();// this is a router object, which is a mini-app
 
 // ROUTES FOR PLAYERS
 
-router.get('/player', async (req, res) => { 
-
+router.get('/player', async (req, res) => {
   let players = await PlayerModel.findAll(); // find all players in the PlayerModel
   res.status(200).json(players); // all the players i find, send them back as a json object
 });
-router.get('/player/:id', async (req, res) => { 
+router.get('/player/:id', async (req, res) => {
     let id = req.params.id; // get the id from the url
     let players = await PlayerModel.findByPk(id); // find all players in the PlayerModel
     res.status(200).json(players); // all the players i find, send them back as a json object
@@ -21,8 +20,13 @@ router.get('/player/:id', async (req, res) => {
 
 
 router.post('/player', async (req, res) => {
-    let player = await PlayerModel.create(req.body); // create a new player in the PlayerModel
-    res.status(200).json(player); // send back the player i created
+    try{
+        console.log("REQ BODY", req.body);
+        let player = await PlayerModel.create(req.body); // create a new player in the PlayerModel
+        res.status(200).json(player); // send back the player i created
+    } catch (error) {
+        console.log(error);
+    }
 });
 
 router.patch('/player/:id', async (req, res) => {
